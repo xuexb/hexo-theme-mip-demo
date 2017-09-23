@@ -14,6 +14,9 @@ git clone https://github.com/xuexb/hexo-theme-mip.git
 # 在 demo 里建立软连接, 这样方便开发
 mkdir -p hexo-theme-mip-demo/themes
 ln -s $path/hexo-theme-mip hexo-theme-mip-demo/themes/mip
+
+# 安装依赖
+npm install
 ```
 
 ## 依赖
