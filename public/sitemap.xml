@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://xuexb.github.io/hexo-theme-mip-demo/public/post/hello-world.html</loc>
+    
+    <lastmod>2017-09-24T10:12:00.000Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://xuexb.github.io/hexo-theme-mip-demo/public/post/theme-mip.html</loc>
     
     <lastmod>2017-09-24T09:34:24.000Z</lastmod>
@@ -26,13 +33,6 @@
     <loc>https://xuexb.github.io/hexo-theme-mip-demo/public/post/mip-link.html</loc>
     
     <lastmod>2017-09-24T09:00:54.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://xuexb.github.io/hexo-theme-mip-demo/public/post/hello-world.html</loc>
-    
-    <lastmod>2017-09-24T08:48:11.000Z</lastmod>
     
   </url>
   
