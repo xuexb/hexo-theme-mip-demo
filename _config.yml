@@ -13,8 +13,8 @@ timezone:
 
 # URL
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
-url: 'https://xuexb.github.io/hexo-theme-mip-demo'
-root: /hexo-theme-mip-demo
+url: 'https://xuexb.github.io/hexo-theme-mip-demo/public'
+root: /hexo-theme-mip-demo/public
 permalink: post/:title.html
 permalink_defaults:
 
