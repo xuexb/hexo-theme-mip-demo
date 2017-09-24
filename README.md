@@ -23,6 +23,7 @@ npm install
 
 - [hexo-mip-css](https://github.com/xuexb/hexo-mip-css)
 - [hexo-theme-mip](https://github.com/xuexb/hexo-theme-mip)
+- [hexo-auto-canonical](https://github.com/HyunSeob/hexo-auto-canonical)
 
 ## License
 

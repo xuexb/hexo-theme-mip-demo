@@ -3,18 +3,21 @@
 ## Source: https://github.com/hexojs/hexo/
 
 # Site
-title: Hexo
-subtitle:
-description:
-author: xuexb
-language:
-timezone:
+title: '简单搜索_专注搜索相关技术设计'
+subtitle: '简单搜索'
+description: '简单搜索: 简单 - 简约、极简、便捷, 搜索 - 智能聚合、极速. 专注搜索相关技术设计'
+author: 简单搜索
+
+## @yugasun
+## 这里个人新增了两种语言：en - 英文，zh-cn - 中文
+language: zh-cn
+timezone: Asia/Shanghai
 
 # URL
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
-url: http://yoursite.com
+url: https://jiandansousuo.com
 root: /
-permalink: :year/:month/:day/:title/
+permalink: post/:title.html
 permalink_defaults:
 
 # Directory
@@ -26,6 +29,14 @@ category_dir: categories
 code_dir: downloads/code
 i18n_dir: :lang
 skip_render:
+
+# 在归档页面显示所有文章
+# 需要上面安装的 hexo-generator-archive 插件支持
+archive_generator:
+  per_page: 0
+  yearly: false
+  monthly: false
+  daily: false
 
 # Writing
 new_post_name: :title.md # File name of new posts
@@ -72,5 +83,4 @@ pagination_dir: page
 # Extensions
 ## Plugins: https://hexo.io/plugins/
 ## Themes: https://hexo.io/themes/
-# theme: hexo-theme-mip
 theme: mip
