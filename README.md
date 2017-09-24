@@ -2,7 +2,7 @@
 
 Hexo MIP 主题的 demo
 
-## 预览
+## 本地运行
 
 ``` bash
 # 下载 demo
@@ -12,8 +12,9 @@ git clone https://github.com/xuexb/hexo-theme-mip-demo.git
 npm install
 ```
 
-## 依赖
+## 链接
 
+- [在线查看](https://xuexb.github.io/hexo-theme-mip-demo/)
 - [hexo-generator-mip](https://github.com/xuexb/hexo-generator-mip)
 - [hexo-theme-mip](https://github.com/xuexb/hexo-theme-mip)
 
