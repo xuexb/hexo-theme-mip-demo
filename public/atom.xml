@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>首页-hexo-theme-mip-demo</title>
+  
+  <subtitle>hexo-theme-mip-demo</subtitle>
+  <link href="/hexo-theme-mip-demo/atom.xml" rel="self"/>
+  
+  <link href="https://xuexb.github.io/hexo-theme-mip-demo/"/>
+  <updated>2017-09-24T09:34:24.000Z</updated>
+  <id>https://xuexb.github.io/hexo-theme-mip-demo/</id>
+  
+  <author>
+    <name>mip-demo</name>
+    
+  </author>
+  
+  <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>为 Hexo 制作 MIP 主题</title>
+    <link href="https://xuexb.github.io/hexo-theme-mip-demo/post/theme-mip.html"/>
+    <id>https://xuexb.github.io/hexo-theme-mip-demo/post/theme-mip.html</id>
+    <published>2017-09-24T09:06:00.000Z</published>
+    <updated>2017-09-24T09:34:24.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>前两天看了下 <a href="https://hexo.io/" target="_blank" rel="external">Hexo</a> ，第一眼望去，感觉略复杂啊。在主题市场搜一些 MIP 相关的，发现没有。。。于是我做这个可能是迄今为止第一个 Hexo 的 MIP 主题。在经过折腾后发现，Hexo 还是吊吊的，自定义功能很强~</p><a id="more"></a><h2 id="处理-MIP-规范"><a href="#处理-MIP-规范" class="headerlink" title="处理 MIP 规范"></a>处理 MIP 规范</h2><p>由于 MIP 有一些规范，如 <code>&lt;img&gt;</code> -&gt; <code>&lt;mip-img&gt;</code>，市面上的主题肯定规范校验不通过，那么今天就由一个最简单的主题开始做吧。</p><h3 id="处理页面-css-样式"><a href="#处理页面-css-样式" class="headerlink" title="处理页面 css 样式"></a>处理页面 css 样式</h3><p>思路是在页面生成后 <code>after_generate</code> ，获取主题下的 <code>source/css/**/*.css</code> ，并获取其内容保存下来，注入辅助函数，手动的 <code>&lt;head&gt;</code> 结束前调用方法输出合并后的样式。</p><h3 id="处理页面-img-标签"><a href="#处理页面-img-标签" class="headerlink" title="处理页面 img 标签"></a>处理页面 img 标签</h3><p>思路是在页面渲染后 <code>after_render:html</code> ，使用勾子把内容里的 <code>&lt;img&gt;</code> 替换为 <code>&lt;mip-img&gt;</code> ，代码是：</p><figure class="highlight js"><table><tr><td class="code"><pre><div class="line">hexo.extend.filter.register(<span class="string">'after_render:html'</span>，<span class="function"><span class="keyword">function</span> (<span class="params">html</span>) </span>&#123;</div><div class="line">    <span class="keyword">return</span> html.replace(<span class="regexp">/&lt;img([\S\s]+?)\/?&gt;/ig</span>，<span class="function"><span class="keyword">function</span> (<span class="params">match，tag</span>) </span>&#123;</div><div class="line">        <span class="keyword">return</span> <span class="string">'&lt;mip-img $&#123;tag&#125;&gt;&lt;/mip-img&gt;'</span>.replace(<span class="string">'$&#123;tag&#125;'</span>，tag.trim());</div><div class="line">    &#125;);</div><div class="line">&#125;);</div></pre></td></tr></table></figure><div class="tip-error"><br>这里只是”暴力”的替换了，并没有处理规范里的宽高，所以在主题里使用图片时，还是需要明确的定义图片的宽高。<br></div><p>当然也可以做成自动抓取</p><ol><li>如果是本地 - 直接获取图片信息，并设置宽高</li><li>如果是远程 - 根据链接生成 <code>md5</code> 小缀缀，远程下载图片到本地，获取宽高后使用小缀缀设置缓存，最后设置图片宽高</li></ol><h3 id="处理页面-a-标签"><a href="#处理页面-a-标签" class="headerlink" title="处理页面 a 标签"></a>处理页面 a 标签</h3><p>同 <code>&lt;img&gt;</code> 标签思路一样，额外加了个判断，判断链接是不是当前页面的链接，如果是则添加 <code>data-type=&quot;mip&quot;</code> 否则忽略</p><h3 id="处理页面-canonical-标记"><a href="#处理页面-canonical-标记" class="headerlink" title="处理页面 canonical 标记"></a>处理页面 canonical 标记</h3><p>由于必须添加 <code>canonical</code> 标记，注入了个辅助方法获取并输出</p><hr><p>以上解决方法我写成了插件，在开发 Hexo MIP 主题时直接使用就行，代码: <a href="https://github.com/xuexb/hexo-generator-mip" target="_blank" rel="external">https://github.com/xuexb/hexo-generator-mip</a></p><div class="tip"><br>由于只是简单的应用下，打通整体流程，只做了：主页、归档、详情，后续再慢慢扩展吧。<br></div><h2 id="todo"><a href="#todo" class="headerlink" title="todo"></a>todo</h2><ul><li>生成的结果进行规范校验</li><li>添加统计</li><li>开发其他主流主题</li></ul><h2 id="Link"><a href="#Link" class="headerlink" title="Link"></a>Link</h2><ul><li><a href="https://github.com/xuexb/hexo-theme-mip" target="_blank" rel="external">Hexo MIP 主题</a></li><li><a href="https://github.com/xuexb/hexo-generator-mip" target="_blank" rel="external">Hexo MIP 插件套装</a> - 助你开发 Hexo 的 MIP 主题</li><li><a href="https://github.com/xuexb/hexo-mip-push" target="_blank" rel="external">Hexo MIP 链接自动推送</a></li></ul>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;前两天看了下 &lt;a href=&quot;https://hexo.io/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Hexo&lt;/a&gt; ，第一眼望去，感觉略复杂啊。在主题市场搜一些 MIP 相关的，发现没有。。。于是我做这个可能是迄今为止第一个 Hexo 的 MIP 主题。在经过折腾后发现，Hexo 还是吊吊的，自定义功能很强~&lt;/p&gt;
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>什么是 MIP</title>
+    <link href="https://xuexb.github.io/hexo-theme-mip-demo/post/mip.html"/>
+    <id>https://xuexb.github.io/hexo-theme-mip-demo/post/mip.html</id>
+    <published>2017-09-24T08:57:18.000Z</published>
+    <updated>2017-09-24T09:01:13.000Z</updated>
+    
+    <content type="html"><![CDATA[<blockquote><p>摘自 <a href="https://www.mipengine.org/" target="_blank" rel="external">MIP官网</a></p></blockquote><p>MIP （Mobile Instant Pages - 移动网页加速器）, 是一套应用于移动网页的开放性技术标准。通过提供 MIP-HTML 规范、MIP-JS 运行环境以及 MIP-Cache 页面缓存系统，实现移动网页加速。</p><p>MIP 主要由三部分组织成：</p><ul><li>MIP HTML</li><li>MIP JS</li><li>MIP Cache</li></ul><a id="more"></a><p>MIP HTML 基于 HTML 中的基础标签制定了全新的规范，通过对一部分基础标签的使用限制或功能扩展，使 HTML 能够展现更加丰富的内容；MIP JS 可以保证 MIP HTML 页面的快速渲染；MIP Cache 用于实现 MIP 页面的高速缓存，从而进一步提高页面性能。</p><h2 id="1-MIP-HTML"><a href="#1-MIP-HTML" class="headerlink" title="1. MIP HTML"></a>1. MIP HTML</h2><div class="tip"><br>提示：MIP HTML 基于 HTML 基础规范进行了扩展.<br></div><p>下面是一段简单的 MIP HTML 代码示例：</p><figure class="highlight html"><table><tr><td class="code"><pre><div class="line"><span class="meta">&lt;!DOCTYPE html&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">mip</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">head</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">meta</span> <span class="attr">http-equiv</span>=<span class="string">"Content-Type"</span> <span class="attr">content</span>=<span class="string">"text/html; charset=utf-8"</span> /&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">"viewport"</span> <span class="attr">content</span>=<span class="string">"width=device-width,minimum-scale=1,initial-scale=1"</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">"stylesheet"</span> <span class="attr">type</span>=<span class="string">"text/css"</span> <span class="attr">href</span>=<span class="string">"https://mipcache.bdstatic.com/static/v1/mip.css"</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">"canonical"</span> <span class="attr">href</span>=<span class="string">"https://www.mipengine.org/"</span>&gt;</span></div><div class="line">        <span class="comment">&lt;!-- noscript 标签是为了在不支持 script 的环境下快速的展现 mip 页面，推荐使用 --&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">noscript</span>&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">style</span> <span class="attr">mip-officialrelease</span>&gt;</span><span class="undefined"></span></div><div class="line"><span class="undefined">                body &#123;</span></div><div class="line"><span class="undefined">                    -webkit-animation:none;</span></div><div class="line"><span class="undefined">                       -moz-animation:none;</span></div><div class="line"><span class="undefined">                        -ms-animation:none;</span></div><div class="line"><span class="undefined">                            animation:none</span></div><div class="line"><span class="undefined">                &#125;</span></div><div class="line"><span class="undefined">            </span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></div><div class="line">        <span class="tag">&lt;/<span class="name">noscript</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">head</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">body</span>&gt;</span>Hello World!<span class="tag">&lt;/<span class="name">body</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"https://mipcache.bdstatic.com/static/v1/mip.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></div></pre></td></tr></table></figure><p>MIP HTML 规范中有两类标签，一类是 HTML 常规标签，另一类是 MIP 标签。MIP 标签也被称作 MIP HTML 组件，使用它们来替代 HTML 常规标签可以大幅提升页面性能。</p><p>例如，mip-img标签，它使得图片只在需要时才进行加载，减少了页面渲染时间，节省了用户的流量。</p><h2 id="2-MIP-JS"><a href="#2-MIP-JS" class="headerlink" title="2. MIP JS"></a>2. MIP JS</h2><p>MIP JS 用于管理资源的加载，并支持上述 MIP 标签的使用，从而确保页面的快速渲染，提高页面各方面的性能。</p><p>MIP JS 最显著的优势是能够异步加载所有外部资源，整个页面渲染过程不会被页面中的某些元素阻塞，从而实现页面渲染速度的提升。</p><p>此外，MIP JS 还涵盖了所有 iframe 的沙盒、于资源加载前提前计算页面元素布局、禁用缓慢 css 选择器等技术性能。</p><h2 id="3-MIP-Cache"><a href="#3-MIP-Cache" class="headerlink" title="3. MIP Cache"></a>3. MIP Cache</h2><p>MIP Cache 是一套基于代理的 CDN(Content Delivery Network) 缓存系统，可用于缓存所有被百度相关页面引用或者从百度相关服务点出的 MIP 页面。</p><p>用户在访问 MIP 页面的时候，请求首先会发到 CDN 服务器，如果页面存在，则从 CDN 返回，如果 CDN 上不存在，则会请求第三方服务器。同时 MIP Cache 服务器会将页面缓存到 CDN 上。在使用 MIP Cache 时，MIP 页面所需要的所有静态文件和外部资源都会被缓存到 CDN 上（视频除外），并且页面中的资源链接会被转换成相对地址，很大程度上提升了页面渲染速度。</p><p>每一个 MIP 页面都会绑定一个验证系统，在页面进行渲染时，这种验证器可以直接在浏览器控制台中输出页面的错误；并且随着代码逻辑的变化，能够展示其对页面性能以及用户体验的影响。</p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;blockquote&gt;
+&lt;p&gt;摘自 &lt;a href=&quot;https://www.mipengine.org/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;MIP官网&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;MIP （Mobile Instant Pages - 移动网页加速器）, 是一套应用于移动网页的开放性技术标准。通过提供 MIP-HTML 规范、MIP-JS 运行环境以及 MIP-Cache 页面缓存系统，实现移动网页加速。&lt;/p&gt;
+&lt;p&gt;MIP 主要由三部分组织成：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;MIP HTML&lt;/li&gt;
+&lt;li&gt;MIP JS&lt;/li&gt;
+&lt;li&gt;MIP Cache&lt;/li&gt;
+&lt;/ul&gt;
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>mip-link 使用文档</title>
+    <link href="https://xuexb.github.io/hexo-theme-mip-demo/post/mip-link.html"/>
+    <id>https://xuexb.github.io/hexo-theme-mip-demo/post/mip-link.html</id>
+    <published>2017-09-24T08:53:27.000Z</published>
+    <updated>2017-09-24T09:00:54.000Z</updated>
+    
+    <content type="html"><![CDATA[<blockquote><p>摘自 <a href="https://www.mipengine.org/" target="_blank" rel="external">MIP官网</a></p></blockquote><p>实现两个 MIP 页面之间互相跳转的功能。</p><table><thead><tr><th>标题</th><th>内容</th></tr></thead><tbody><tr><td>类型</td><td>通用</td></tr><tr><td>支持布局</td><td>不使用布局</td></tr><tr><td>所需脚本</td><td>无</td></tr></tbody></table><a id="more"></a><h2 id="升级说明"><a href="#升级说明" class="headerlink" title="升级说明"></a>升级说明</h2><div class="tip-info"><br>由于 <code>mip-link</code> 的标签不利于 <code>spider</code> 识别，故将 <code>mip-link</code> 的自定义标签升级成 a 标签上直接扩展，使用方法见下文。之前的方式还是能够正常使用<br></div><h2 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h2><figure class="highlight html"><table><tr><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">a</span> <span class="attr">data-type</span>=<span class="string">"mip"</span> <span class="attr">data-title</span>=<span class="string">"目标页面标题"</span> <span class="attr">href</span>=<span class="string">"https://www.mipengine.org/doc/00-mip-101.html"</span>&gt;</span>链接文字<span class="tag">&lt;/<span class="name">a</span>&gt;</span></div></pre></td></tr></table></figure><h2 id="属性"><a href="#属性" class="headerlink" title="属性"></a>属性</h2><h3 id="href"><a href="#href" class="headerlink" title="href"></a>href</h3><p>说明：目标网址<br>必选项：是<br>类型：字符串<br>取值范围：<code>https?://.*</code>, <code>mailto:.*</code>, <code>tel:.*</code></p><h3 id="data-type"><a href="#data-type" class="headerlink" title="data-type"></a>data-type</h3><p>说明：url 类型，目前只能取值 mip，代表是这个子链 mip 的页面<br>必选项：否<br>类型：字符串<br>取值范围：mip<br>默认值：<code>&quot;&quot;</code></p><div class="tip-error"><br>如果不是 href 对应的落地页面不是 MIP 页面，请去掉这个属性<br></div><h3 id="data-title"><a href="#data-title" class="headerlink" title="data-title"></a>data-title</h3><p>说明：目标页面标题<br>必选项：否<br>类型：字符串<br>取值范围：任何<br>默认值：<code>&quot;&quot;</code></p><h3 id="mip-link-标签使用的方式-不推荐"><a href="#mip-link-标签使用的方式-不推荐" class="headerlink" title="mip-link 标签使用的方式(不推荐)"></a>mip-link 标签使用的方式(不推荐)</h3><p>1、引入脚本：<a href="https://mipcache.bdstatic.com/static/v1/mip-link/mip-link.js" target="_blank" rel="external">https://mipcache.bdstatic.com/static/v1/mip-link/mip-link.js</a></p><p>2、添加代码:<br><figure class="highlight html"><table><tr><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">mip-link</span> <span class="attr">title</span>=<span class="string">"目标页面标题"</span> <span class="attr">href</span>=<span class="string">"https://www.mipengine.org/doc/00-mip-101.html"</span>&gt;</span>链接文字<span class="tag">&lt;/<span class="name">mip-link</span>&gt;</span></div></pre></td></tr></table></figure></p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;blockquote&gt;
+&lt;p&gt;摘自 &lt;a href=&quot;https://www.mipengine.org/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;MIP官网&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;实现两个 MIP 页面之间互相跳转的功能。&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;标题&lt;/th&gt;
+&lt;th&gt;内容&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;类型&lt;/td&gt;
+&lt;td&gt;通用&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;支持布局&lt;/td&gt;
+&lt;td&gt;不使用布局&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;所需脚本&lt;/td&gt;
+&lt;td&gt;无&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>关于</title>
+    <link href="https://xuexb.github.io/hexo-theme-mip-demo/post/about.html"/>
+    <id>https://xuexb.github.io/hexo-theme-mip-demo/post/about.html</id>
+    <published>2017-09-24T08:36:39.000Z</published>
+    <updated>2017-09-24T09:06:22.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>Hexo MIP 模板</p><h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><span class="comment"># 安装依赖</span></div><div class="line">npm install --save \</div><div class="line">    hexo-renderer-jade \</div><div class="line">    hexo-generator-feed \</div><div class="line">    hexo-generator-sitemap \</div><div class="line">    hexo-browsersync \</div><div class="line">    hexo-generator-archive \</div><div class="line">    hexo-generator-mip</div><div class="line"></div><div class="line"><span class="comment"># 克隆主题</span></div><div class="line">git <span class="built_in">clone</span> https://github.com/xuexb/hexo-theme-mip.git themes/mip</div></pre></td></tr></table></figure><a id="more"></a><h2 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h2><p>修改 <code>_config.yml</code> 的 <code>theme</code> 配置项为 <code>mip</code>:</p><figure class="highlight yaml"><table><tr><td class="code"><pre><div class="line"><span class="comment"># 站点信息</span></div><div class="line"><span class="attr">title:</span> <span class="string">'网站首页标题'</span></div><div class="line"><span class="attr">subtitle:</span> <span class="string">'网站二级页面标题后缀'</span></div><div class="line"><span class="attr">description:</span> <span class="string">'网站描述'</span></div><div class="line"><span class="attr">author:</span> <span class="string">'网站作者, 导航和版权使用'</span></div><div class="line"><span class="attr">url:</span> <span class="string">'网站绝对 http 链接'</span></div><div class="line"><span class="attr">language:</span> <span class="string">zh-cn</span></div><div class="line"></div><div class="line"><span class="comment"># 启用 mip 主题</span></div><div class="line"><span class="attr">theme:</span> <span class="string">mip</span></div><div class="line"></div><div class="line"><span class="comment"># 在归档页面显示所有文章</span></div><div class="line"><span class="comment"># 需要上面安装的 hexo-generator-archive 插件支持</span></div><div class="line"><span class="attr">archive_generator:</span></div><div class="line"><span class="attr">    per_page:</span> <span class="number">0</span></div><div class="line"><span class="attr">    yearly:</span> <span class="literal">false</span></div><div class="line"><span class="attr">    monthly:</span> <span class="literal">false</span></div><div class="line"><span class="attr">    daily:</span> <span class="literal">false</span></div></pre></td></tr></table></figure><h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><h3 id="插入图片"><a href="#插入图片" class="headerlink" title="插入图片"></a>插入图片</h3><p>由于 <a href="https://www.mipengine.org/examples/mip/mip-img.html" target="_blank" rel="external">MIP img标签规范</a> , 在使用图片时必须设置宽高, 如:</p><figure class="highlight html"><table><tr><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">"https://dummyimage.com/100x100"</span> <span class="attr">width</span>=<span class="string">"100"</span> <span class="attr">height</span>=<span class="string">"100"</span> <span class="attr">alt</span>=<span class="string">"desc"</span>&gt;</span></div></pre></td></tr></table></figure><h3 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h3><p>在文单合适位置插入 <code>&lt;!-- more --&gt;</code> 将提取为主页的摘要文本</p><h3 id="描述"><a href="#描述" class="headerlink" title="描述"></a>描述</h3><ul><li>首页使用 <code>config.description</code></li><li>文章页使用 <code>post.desc</code> , 如果不存在则使用 <code>post.title + config.author</code></li></ul><h3 id="警告块"><a href="#警告块" class="headerlink" title="警告块"></a>警告块</h3><p>思路来自 <a href="https://github.com/pinggod/hexo-theme-apollo" target="_blank" rel="external">@pinggod/hexo-theme-apollo</a> , 颜色来自 <a href="http://www.layui.com/doc/element/color.html" target="_blank" rel="external">layui</a></p><h4 id="默认-绿色"><a href="#默认-绿色" class="headerlink" title="默认 - 绿色"></a>默认 - 绿色</h4><div class="tip"><br>    预处理器很强大，但它只是编写 CSS 的辅助工具。出于对扩展和维护等方面的考虑，在大型项目中有必要使用预处理器构建 CSS；但是对于小型项目，原生的 CSS 可能是一种更好的选择。不要肆意使用预处理器！<br></div><h4 id="提示-蓝色"><a href="#提示-蓝色" class="headerlink" title="提示 - 蓝色"></a>提示 - 蓝色</h4><div class="tip-info"><br>    预处理器很强大，但它只是编写 CSS 的辅助工具。出于对扩展和维护等方面的考虑，在大型项目中有必要使用预处理器构建 CSS；但是对于小型项目，原生的 CSS 可能是一种更好的选择。不要肆意使用预处理器！<br></div><h4 id="警告-红色"><a href="#警告-红色" class="headerlink" title="警告 - 红色"></a>警告 - 红色</h4><div class="tip-error"><br>    预处理器很强大，但它只是编写 CSS 的辅助工具。出于对扩展和维护等方面的考虑，在大型项目中有必要使用预处理器构建 CSS；但是对于小型项目，原生的 CSS 可能是一种更好的选择。不要肆意使用预处理器！<br></div><h2 id="License"><a href="#License" class="headerlink" title="License"></a>License</h2><p>MIT</p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;Hexo MIP 模板&lt;/p&gt;
+&lt;h2 id=&quot;安装&quot;&gt;&lt;a href=&quot;#安装&quot; class=&quot;headerlink&quot; title=&quot;安装&quot;&gt;&lt;/a&gt;安装&lt;/h2&gt;&lt;figure class=&quot;highlight bash&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;# 安装依赖&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;npm install --save \&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    hexo-renderer-jade \&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    hexo-generator-feed \&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    hexo-generator-sitemap \&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    hexo-browsersync \&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    hexo-generator-archive \&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    hexo-generator-mip&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;# 克隆主题&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;git &lt;span class=&quot;built_in&quot;&gt;clone&lt;/span&gt; https://github.com/xuexb/hexo-theme-mip.git themes/mip&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>Hello World</title>
+    <link href="https://xuexb.github.io/hexo-theme-mip-demo/post/hello-world.html"/>
+    <id>https://xuexb.github.io/hexo-theme-mip-demo/post/hello-world.html</id>
+    <published>2017-09-24T08:22:09.000Z</published>
+    <updated>2017-09-24T08:48:11.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>Welcome to <a href="https://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="external">GitHub</a>.</p><a id="more"></a><h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">$ hexo new <span class="string">"My New Post"</span></div></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="external">Writing</a></p><h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">$ hexo server</div></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="external">Server</a></p><h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">$ hexo generate</div></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="external">Generating</a></p><h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">$ hexo deploy</div></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="external">Deployment</a></p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;Welcome to &lt;a href=&quot;https://hexo.io/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Hexo&lt;/a&gt;! This is your very first post. Check &lt;a href=&quot;https://hexo.io/docs/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;documentation&lt;/a&gt; for more info. If you get any problems when using Hexo, you can find the answer in &lt;a href=&quot;https://hexo.io/docs/troubleshooting.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;troubleshooting&lt;/a&gt; or you can ask me on &lt;a href=&quot;https://github.com/hexojs/hexo/issues&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;GitHub&lt;/a&gt;.&lt;/p&gt;
+    
+    </summary>
+    
+    
+  </entry>
+  
+</feed>

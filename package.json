@@ -25,7 +25,6 @@
   "description": "Hexo MIP 主题的 demo",
   "main": "index.js",
   "devDependencies": {},
-  "scripts": {},
   "repository": {
     "type": "git",
     "url": "git+https://github.com/xuexb/hexo-theme-mip-demo.git"
