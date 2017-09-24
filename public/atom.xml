@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
-  <title>首页-hexo-theme-mip-demo</title>
+  <title>Hexo MIP 主题预览</title>
   
-  <subtitle>hexo-theme-mip-demo</subtitle>
+  <subtitle>mip-demo</subtitle>
   <link href="/hexo-theme-mip-demo/public/atom.xml" rel="self"/>
   
   <link href="https://xuexb.github.io/hexo-theme-mip-demo/public/"/>
