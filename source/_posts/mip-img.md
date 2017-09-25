@@ -21,7 +21,7 @@ mip-img 用来支持在 mip 中增加图片内容。
 注意： <code>&lt;mip-img&gt;</code> 需要对应闭合标签 <code>&lt;/mip-img&gt;</code> , 不支持自闭合写法。自闭合规范请见 <a href="https://www.w3.org/TR/html/syntax.html#void-elements">w3.org</a>。
 </div>
 
-<img src="/images/300x300.png" width="300" height="300" alt="mip-img demo">
+<img src="/hexo-theme-mip-demo/public/images/300x300.png" width="300" height="300" alt="mip-img demo">
 
 ### 最基本使用
 
