@@ -6,7 +6,7 @@
   <link href="/hexo-theme-mip-demo/public/atom.xml" rel="self"/>
   
   <link href="https://xuexb.github.io/hexo-theme-mip-demo/public/"/>
-  <updated>2017-09-24T15:55:47.000Z</updated>
+  <updated>2017-09-25T15:19:06.000Z</updated>
   <id>https://xuexb.github.io/hexo-theme-mip-demo/public/</id>
   
   <author>
@@ -15,6 +15,49 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>mip-img 图片使用</title>
+    <link href="https://xuexb.github.io/hexo-theme-mip-demo/public/post/mip-img.html"/>
+    <id>https://xuexb.github.io/hexo-theme-mip-demo/public/post/mip-img.html</id>
+    <published>2017-09-25T15:06:07.000Z</published>
+    <updated>2017-09-25T15:19:06.000Z</updated>
+    
+    <content type="html"><![CDATA[<blockquote><p>摘自 <a href="https://www.mipengine.org/examples/mip/mip-img.html" target="_blank" rel="external">MIP官网 - mip-img 图片</a></p></blockquote><p>mip-img 用来支持在 mip 中增加图片内容。</p><table><thead><tr><th>标题</th><th>内容</th></tr></thead><tbody><tr><td>类型</td><td>通用</td></tr><tr><td>支持布局</td><td><code>responsive, fixed-height, fill, container, fixed</code></td></tr><tr><td>所需脚本</td><td>无</td></tr></tbody></table><a id="more"></a><h2 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h2><div class="tip-info"><br>注意： <code>&lt;mip-img&gt;</code> 需要对应闭合标签 <code>&lt;/mip-img&gt;</code> , 不支持自闭合写法。自闭合规范请见 <a href="https://www.w3.org/TR/html/syntax.html#void-elements" target="_blank" rel="external">w3.org</a>。<br></div><p><mip-img src="/images/300x300.png" width="300" height="300" alt="mip-img demo"></mip-img></p><h3 id="最基本使用"><a href="#最基本使用" class="headerlink" title="最基本使用"></a>最基本使用</h3><figure class="highlight html"><table><tr><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">mip-img</span></span></div><div class="line"><span class="tag">    <span class="attr">layout</span>=<span class="string">"responsive"</span></span></div><div class="line"><span class="tag">    <span class="attr">width</span>=<span class="string">"350"</span></span></div><div class="line"><span class="tag">    <span class="attr">height</span>=<span class="string">"263"</span></span></div><div class="line"><span class="tag">    <span class="attr">src</span>=<span class="string">"https://www.mipengine.org/static/img/sample_01.jpg"</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">mip-img</span>&gt;</span></div></pre></td></tr></table></figure><h3 id="加全屏查看"><a href="#加全屏查看" class="headerlink" title="加全屏查看"></a>加全屏查看</h3><figure class="highlight html"><table><tr><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">mip-img</span></span></div><div class="line"><span class="tag">    <span class="attr">layout</span>=<span class="string">"responsive"</span></span></div><div class="line"><span class="tag">    <span class="attr">width</span>=<span class="string">"350"</span></span></div><div class="line"><span class="tag">    <span class="attr">height</span>=<span class="string">"263"</span></span></div><div class="line"><span class="tag">    <span class="attr">popup</span></span></div><div class="line"><span class="tag">    <span class="attr">src</span>=<span class="string">"https://www.mipengine.org/static/img/sample_01.jpg"</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">mip-img</span>&gt;</span></div></pre></td></tr></table></figure><h3 id="其他布局（以fixed为例）"><a href="#其他布局（以fixed为例）" class="headerlink" title="其他布局（以fixed为例）"></a>其他布局（以fixed为例）</h3><figure class="highlight html"><table><tr><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">mip-img</span></span></div><div class="line"><span class="tag">    <span class="attr">layout</span>=<span class="string">"fixed-height"</span></span></div><div class="line"><span class="tag">    <span class="attr">height</span>=<span class="string">"263"</span></span></div><div class="line"><span class="tag">    <span class="attr">alt</span>=<span class="string">"baidu mip img"</span></span></div><div class="line"><span class="tag">    <span class="attr">src</span>=<span class="string">"https://www.mipengine.org/static/img/sample_01.jpg"</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">mip-img</span>&gt;</span></div></pre></td></tr></table></figure><h3 id="带图片标题"><a href="#带图片标题" class="headerlink" title="带图片标题"></a>带图片标题</h3><p>图片标题可添加在 <code>&lt;mip-img&gt;</code> 后用于说明，可在 <code>&lt;style mip-custom&gt;</code> 标签下自定义样式</p><figure class="highlight html"><table><tr><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">mip-img</span></span></div><div class="line"><span class="tag">    <span class="attr">layout</span>=<span class="string">"responsive"</span></span></div><div class="line"><span class="tag">    <span class="attr">width</span>=<span class="string">"350"</span></span></div><div class="line"><span class="tag">    <span class="attr">height</span>=<span class="string">"263"</span></span></div><div class="line"><span class="tag">    <span class="attr">popup</span></span></div><div class="line"><span class="tag">    <span class="attr">alt</span>=<span class="string">"baidu mip img"</span></span></div><div class="line"><span class="tag">    <span class="attr">src</span>=<span class="string">"https://www.mipengine.org/static/img/sample_01.jpg"</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">mip-img</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">p</span> <span class="attr">class</span>=<span class="string">"mip-img-subtitle"</span>&gt;</span>带图片标题的类型<span class="tag">&lt;/<span class="name">p</span>&gt;</span></div></pre></td></tr></table></figure>]]></content>
+    
+    <summary type="html">
+    
+      &lt;blockquote&gt;
+&lt;p&gt;摘自 &lt;a href=&quot;https://www.mipengine.org/examples/mip/mip-img.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;MIP官网 - mip-img 图片&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;mip-img 用来支持在 mip 中增加图片内容。&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;标题&lt;/th&gt;
+&lt;th&gt;内容&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;类型&lt;/td&gt;
+&lt;td&gt;通用&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;支持布局&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;responsive, fixed-height, fill, container, fixed&lt;/code&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;所需脚本&lt;/td&gt;
+&lt;td&gt;无&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+    
+    </summary>
+    
+    
+  </entry>
   
   <entry>
     <title>为 Hexo 制作 MIP 主题</title>
