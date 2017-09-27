@@ -2,44 +2,44 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>https://xuexb.github.io/hexo-theme-mip-demo/public/post/mip-img.html</loc>
+    <loc>https://xuexb.github.io/hexo-theme-mip-demo/public/post/about.html</loc>
     
-    <lastmod>2017-09-25T15:35:52.000Z</lastmod>
+    <lastmod>2017-09-27T14:14:43.000Z</lastmod>
     
   </url>
   
   <url>
     <loc>https://xuexb.github.io/hexo-theme-mip-demo/public/post/theme-mip.html</loc>
     
-    <lastmod>2017-09-24T15:55:47.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://xuexb.github.io/hexo-theme-mip-demo/public/post/hello-world.html</loc>
-    
-    <lastmod>2017-09-24T10:12:00.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://xuexb.github.io/hexo-theme-mip-demo/public/post/about.html</loc>
-    
-    <lastmod>2017-09-24T09:06:22.000Z</lastmod>
+    <lastmod>2017-09-27T14:01:49.000Z</lastmod>
     
   </url>
   
   <url>
     <loc>https://xuexb.github.io/hexo-theme-mip-demo/public/post/mip.html</loc>
     
-    <lastmod>2017-09-24T09:01:13.000Z</lastmod>
+    <lastmod>2017-09-27T14:01:48.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://xuexb.github.io/hexo-theme-mip-demo/public/post/mip-img.html</loc>
+    
+    <lastmod>2017-09-27T14:01:47.000Z</lastmod>
     
   </url>
   
   <url>
     <loc>https://xuexb.github.io/hexo-theme-mip-demo/public/post/mip-link.html</loc>
     
-    <lastmod>2017-09-24T09:00:54.000Z</lastmod>
+    <lastmod>2017-09-27T14:01:47.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://xuexb.github.io/hexo-theme-mip-demo/public/post/hello-world.html</loc>
+    
+    <lastmod>2017-09-27T14:01:46.000Z</lastmod>
     
   </url>
   
